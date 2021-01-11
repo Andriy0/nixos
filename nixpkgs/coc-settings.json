@@ -1,0 +1,16 @@
+{
+  "languageserver": {
+    "nix": {
+      "command": "rnix-lsp",
+      "filetypes": [
+        "nix"
+      ]
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": [ 
+        "lua" 
+      ]
+    }
+  }
+}

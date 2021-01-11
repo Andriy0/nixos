@@ -1,0 +1,32 @@
+{ config, lib, pkgs, ... }:
+
+let
+  vimsettings = import ./vim.nix;
+  packages = import ./packages.nix;
+  withGUI = (builtins.pathExists ./withGUI && import ./withGUI);
+  inherit (lib) mkIf;
+in
+{
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+  home.packages = packages pkgs withGUI;
+
+  # Home Manager needs a bit of information about you and the
+  # paths it should manage.
+  home.username = "andriy";
+  home.homeDirectory = "/home/andriy";
+
+  home.file.".config/nvim/coc-settings.json".source = ./coc-settings.json;
+
+  programs.neovim = vimsettings pkgs;
+
+  # This value determines the Home Manager release that your
+  # configuration is compatible with. This helps avoid breakage
+  # when a new Home Manager release introduces backwards
+  # incompatible changes.
+  #
+  # You can update Home Manager without changing this value. See
+  # the Home Manager release notes for a list of state version
+  # changes in each release.
+  home.stateVersion = "21.03";
+}
